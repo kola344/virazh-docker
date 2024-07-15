@@ -3,10 +3,10 @@ FROM python:3.9-slim AS fastapi
 
 WORKDIR /app
 
-COPY fastapi/requirements.txt requirements.txt
+COPY virazhapi/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY fastapi .
+COPY virazhapi .
 
 # Используем базовый образ Node.js для Next.js
 FROM node:20.5.0
@@ -18,7 +18,7 @@ ENV NEXTAUTH_URL="http://127.0.0.1:3000"
 WORKDIR /app
 
 # Копируем package.json и package-lock.json для установки зависимостей
-COPY package.json package-lock.json ./
+COPY cafevirage/package.json cafevirage/package-lock.json ./
 RUN npm install
 
 # Копируем остальные файлы проекта
@@ -31,4 +31,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Указываем команды запуска для обоих приложений
-CMD ["sh", "-c", "uvicorn fastapi.main:app --host 0.0.0.0 --port 10000 & npm start"]
+CMD ["sh", "-c", "uvicorn virazhapi.main:app --host 0.0.0.0 --port 10000 & npm start"]
