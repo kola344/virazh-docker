@@ -22,7 +22,7 @@ COPY cafevirage/package.json cafevirage/package-lock.json ./
 RUN npm install
 
 # Копируем остальные файлы проекта
-COPY . .
+COPY cafevirage .
 
 # Выполняем сборку приложения
 RUN npm run build
